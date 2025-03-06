@@ -1,4 +1,4 @@
-import logo from './logo.svg';
+import logo from './logo1.svg';
 import './App.css';
 
 function App() {
@@ -6,8 +6,8 @@ function App() {
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
+        <p className='App-text'>
+          A alejandro y a baljeet les gusta el pene
         </p>
         <a
           className="App-link"
