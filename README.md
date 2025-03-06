@@ -1,70 +1,77 @@
-# Getting Started with Create React App
+# Career-path-profiler
+P-4 solution for magneto
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Progressive Profiling with Enhanced Recommendations
 
-## Available Scripts
+<img src = https://static.magneto365.com/meta/logo-magneto-empleos-redes.jpg alt = "magneto logo" style="width:100%; display:block"/>
 
-In the project directory, you can run:
+## Overview
+This project addresses a common limitation in job search platforms like **Magneto**: recommendations traditionally focus on candidates’ past experience and roles, overlooking their personal interests and future career aspirations. This can be particularly problematic for new users who have not made any applications yet, as the system lacks additional context to generate relevant suggestions. 
 
-### `npm start`
+To solve this, our solution implements **progressive profiling**. When users create an account, the system asks targeted questions about their professional goals, interests, and preferred technologies. Periodically, it will continue to prompt them with follow-up questions to refine their profile over time. This incremental approach allows the recommendation engine to evolve and adapt to each candidate's changing aspirations. 
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Key Features
+1. **Progressive Profiling**  
+   - Upon registration, users answer a short set of questions to identify core interests and skill areas.  
+   - Over time, new question prompts gather updated information on emerging technologies or changing interests.  
+   - This ensures recommendations remain relevant, even if a user’s career goals shift.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+2. **Word Embedding for Recommendations**  
+   - User interests and job posting data are vectorized through word embedding.  
+   - The system analyzes semantic relationships to recommend roles aligned with both immediate and future aspirations.  
+   - This approach captures subtle connections—such as complementary skills or related fields—that might be missed by traditional keyword matching.
 
-### `npm test`
+3. **Personalized User Experience**  
+   - Recommendations become more tailored with each interaction, reflecting changes in the user’s profile.  
+   - The platform adapts as users gain experience, acquire new skills, or explore different career paths.  
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+4. **Increased Engagement & Satisfaction**  
+   - By proactively learning about users, the platform delivers more accurate job suggestions.  
+   - Users are more likely to find employment opportunities that truly match their interests, boosting overall satisfaction.  
 
-### `npm run build`
+## How It Works
+1. **Initial Setup**:  
+   - User registers and completes a basic questionnaire about current job interests, career goals, and preferred fields.  
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+2. **Incremental Profiling**:  
+   - Periodically, or when the user interacts with new job listings, the platform asks additional questions about fresh interests, new skills, or changes in availability.  
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+3. **Continuous Learning**:  
+   - As the user’s responses evolve, the system updates their profile vector in the word embedding space, keeping the recommendation model accurate and up to date.  
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+4. **Refined Recommendations**:  
+   - The recommendation engine, informed by the latest user profile data and advanced vector-based matching, surfaces jobs that align closely with both current and prospective career paths.  
 
-### `npm run eject`
+## Implementation Outline
+1. **Backend & Database**:  
+   - Store user profile information in a database designed to handle incremental updates (e.g., a graph database or a vector-based database).  
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+2. **Word Embedding Model**:  
+   - Train (or integrate) an embedding model on job description data, career-related texts, and relevant user input data.  
+   - Deploy this model to generate numerical vectors for both user profiles and job listings.  
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+3. **Recommendation Engine**:  
+   - Implement a search mechanism (e.g., cosine similarity) to rank job postings by proximity to the user’s vector representation.  
+   - Allow periodic re-ranking to reflect updates in user interests.  
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+4. **User Interface**:  
+   - Provide an intuitive way for users to answer brief questionnaires without overwhelming them.  
+   - Clearly display recommended jobs and explain why they are a good fit (optional but beneficial for user trust).  
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+5. **Monitoring & Feedback**:  
+   - Track user engagement (e.g., clicked job postings, saved jobs) to further refine the model.  
+   - Gather user feedback to validate recommendation accuracy and continuously improve the system.  
 
-## Learn More
+## Benefits
+- **Personalized and Timely Recommendations**: Users discover jobs that match both their immediate interests and future aspirations.  
+- **Higher Engagement**: Frequent, bite-sized prompts keep profiles fresh without burdening users.  
+- **Scalable and Adaptive**: Using a word embedding approach allows for handling large volumes of job data with evolving user needs.  
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+---
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### Future Enhancements
+- **Skill Gap Analysis**: Identify skills a candidate may need to acquire for a specific role and recommend relevant courses or training.  
+- **Collaborative Filtering**: Combine embedding-based recommendations with social or collaborative signals to further refine job suggestions.  
+- **Role-Fit Scoring**: Provide detailed explanations of how well a user’s profile matches each recommendation, boosting transparency.
 
-### Code Splitting
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
