@@ -79,12 +79,6 @@ Para resolver esto, nuestra solución implementa **perfilado progresivo**. Cuand
 
 ## English version
 
-# Career-path-profiler
-P-4 solution for magneto
-
-# Progressive Profiling with Enhanced Recommendations
-
-<img src = https://static.magneto365.com/meta/logo-magneto-empleos-redes.jpg alt = "magneto logo" style="width:100%; display:block"/>
 
 ## Overview
 This project addresses a common limitation in job search platforms like **Magneto**: recommendations traditionally focus on candidates’ past experience and roles, overlooking their personal interests and future career aspirations. This can be particularly problematic for new users who have not made any applications yet, as the system lacks additional context to generate relevant suggestions. 
