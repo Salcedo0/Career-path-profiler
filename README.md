@@ -6,7 +6,7 @@ P-4 solution for magneto
 <img src = https://static.magneto365.com/meta/logo-magneto-empleos-redes.jpg alt = "magneto logo" style="width:100%; display:block"/>
 
 ## Overview
-This project addresses a common limitation in job search platforms like **Magneto**: recommendations traditionally focus on candidates’ past experience and roles, overlooking their personal interests and future career aspirations. This can be particularly problematic for new users who have not made any applications yet, as the system lacks additional context to generate relevant suggestions. 
+This project addresses a common limitation in job search platforms like **Magneto**: recommendations traditionally focus on candidates’ past experience and roles, overlooking their personal interests and future career aspirations. This can be particularly problematic for new users who have not made any applications yet, as the system lacks additional context to generate relevant suggestions so that users can find jobs thy're actually interested in.
 
 To solve this, our solution implements **progressive profiling**. When users create an account, the system asks targeted questions about their professional goals, interests, and preferred technologies. Periodically, it will continue to prompt them with follow-up questions to refine their profile over time. This incremental approach allows the recommendation engine to evolve and adapt to each candidate's changing aspirations. 
 
