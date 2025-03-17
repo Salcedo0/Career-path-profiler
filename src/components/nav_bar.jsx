@@ -1,3 +1,4 @@
+//Nav_bar.jsx
 import { useState } from 'react';
 import '../styles/nav_bar.css'; 
 import logo from '../assets/magneto.svg';

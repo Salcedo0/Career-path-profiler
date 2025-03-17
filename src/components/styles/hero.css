@@ -1,0 +1,26 @@
+body, html {
+    height: 100%;
+    margin: 0;
+}
+
+.hero-container {
+    height: 100vh;
+    background-color: white;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.titulo-placeholder {
+    font-size: 18rem;
+    color: #c85963;
+    text-align: center;
+    margin: 0;
+}
+
+.texto-placeholder {
+    font-size: 1.5rem;
+    color: #c85963;
+    text-align: center;
+}
