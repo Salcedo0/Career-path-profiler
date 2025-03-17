@@ -5,6 +5,8 @@ import magnifying_glass from '../assets/magnifying.svg';
 import iniciar_sesion from '../assets/iniciar_sesion.svg';
 import crear_cuenta from '../assets/crear_cuenta.svg';
 
+//cambiar la topofrafia de la pagina
+//hacer el nav bar mas dinamico y responsive
 
 
 
