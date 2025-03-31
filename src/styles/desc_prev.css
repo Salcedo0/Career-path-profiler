@@ -1,0 +1,54 @@
+.desc-prev-container {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 16px;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 100%; /* Asegura que ocupe todo el ancho disponible */
+  height: 100%; /* Asegura que ocupe toda la altura disponible */
+  box-sizing: border-box;
+  overflow-y: auto; /* Habilita el scroll vertical */
+}
+
+.desc-prev-title {
+  font-size: 20px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 8px;
+}
+
+.desc-prev-company {
+  font-size: 16px;
+  color: #666;
+  margin-bottom: 4px;
+}
+
+.desc-prev-location {
+  font-size: 14px;
+  color: #999;
+  margin-bottom: 16px;
+}
+
+.desc-prev-content {
+  overflow-y: auto; /* Habilita el scroll vertical */
+  padding-right: 8px;
+}
+
+.desc-prev-content h3 {
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+  margin-top: 16px;
+}
+
+.desc-prev-content p,
+.desc-prev-content li {
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 8px;
+}
+
+.desc-prev-content ul {
+  padding-left: 20px;
+  list-style-type: disc;
+}
