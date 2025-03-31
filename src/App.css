@@ -1,0 +1,26 @@
+/* Contenedor principal que divide la pantalla */
+.main-container {
+    display: flex;
+    height: calc(100vh - 60px); /* Resta la altura del Nav_bar y Footer si es necesario */
+    overflow: hidden; /* Evita que el contenedor principal tenga scroll */
+  }
+  
+  /* Contenedor de las tarjetas de previsualización */
+  .previsual-container {
+    display: flex;
+    flex-direction: column;
+    width: 40%; /* Ocupa el 40% del ancho */
+    border-right: 1px solid #ddd; /* Línea divisoria */
+    padding: 16px;
+    box-sizing: border-box;
+    overflow-y: auto; /* Habilita el scroll solo si las tarjetas exceden la altura */
+  }
+  
+  /* Contenedor del detalle del trabajo */
+  .desc-prev-container-app {
+    width: 60%; /* Ocupa el 60% del ancho */
+    padding: 16px;
+    box-sizing: border-box;
+    overflow-y: auto; /* Habilita el scroll vertical */
+    max-height: 100%; /* Asegura que el scroll solo se aplique aquí */
+  }

@@ -1,6 +1,6 @@
 // Footer.jsx
 import React from 'react';
-import './styles/footer.css'; 
+import '../styles/footer.css'; 
 import logoTuya from '../assets/logo-tuya-min.svg'
 import { FaFacebook, FaInstagram, FaLinkedin, FaYoutube, FaGlobe } from 'react-icons/fa'
 
