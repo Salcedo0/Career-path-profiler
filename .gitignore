@@ -12,6 +12,15 @@ dist
 dist-ssr
 *.local
 
+# Environment variables
+#   Ignora las variables de entorno 
+.env
+#   Estas estan por sugerencia de la IA, (Mejor ignorar que lamentar)
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
