@@ -4,10 +4,9 @@ import dotenv from 'dotenv';
 
 dotenv.config(); // Load environment variables from .env file
 
-export const query= async(userPreferences, limit = 5, opt = "porNombre") => {
+export const query= async(userPreferences, limit = 10, opt = "porNombre") => {
 
-    const uri = "process.env.MONGOURI"; // Replace with your MongoDB connection string
-    const client = new MongoClient(uri);
+    const client = new MongoClient(process.env.MONGOURI);
 
     const searchMethod = opt === "porNombre" 
         ? {path:'nombre_vacante_embedding', index: 'magneto_search'} 

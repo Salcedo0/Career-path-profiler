@@ -5,7 +5,6 @@ import Nav_bar from './components/nav_bar';
 import Footer from './components/Footer';
 import Previsual from './components/previsual';
 import Pagination from './components/pagination';
-import * as XLSX from 'xlsx';
 import DescPrev from './components/desc_prev';
 
 function App() {
@@ -14,57 +13,69 @@ function App() {
   const [itemsPerPage] = useState(10); // Elementos por página
   const [totalItems, setTotalItems] = useState(0); // Total de elementos
   const [selectedJob, setSelectedJob] = useState(null); // Estado para el trabajo seleccionado
+  const [searchTerm, setSearchTerm] = useState("Ingeniero"); // Estado para el término de búsqueda
 
-  const fetchData = async () => {
-    const response = await fetch('/backend/MagnetoScrapping2.xlsx');
-    const arrayBuffer = await response.arrayBuffer();
-    const workbook = XLSX.read(arrayBuffer, { type: 'array' });
-    const sheetName = workbook.SheetNames[0];
-    const sheet = workbook.Sheets[sheetName];
-    const data = XLSX.utils.sheet_to_json(sheet);
+  const fetchData = async (term = "") => {
+    try {
+      const response = await fetch('http://localhost:5000/search', {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        method: 'POST',
+        body: JSON.stringify({ term, limit: 10 }) // Usa el término de búsqueda
+      }); 
+      const data = await response.json();
 
-    setTotalItems(data.length); // Total de elementos en el archivo
-    const startIndex = (currentPage - 1) * itemsPerPage;
-    const previsualItems = data.slice(startIndex, startIndex + itemsPerPage).map((row) => ({
-      title: row.title || 'Sin título',
-      company: row.empresa || 'Sin empresa',
-      location: row.ubicacion || 'Sin ubicación',
-      description: row.description || 'Sin descripción',
-      responsibilities: row.responsabilidades ? row.responsabilidades.split(';') : [],
-      requirements: row.requisitos ? row.requisitos.split(';') : [],
-    }));
+      setTotalItems(data.length);
+      const startIndex = (currentPage - 1) * itemsPerPage;
 
-    setPrevisualData(previsualItems);
+      const previsualItems = data.map(vacante => ({
+        title: vacante.nombre_vacante || 'Sin título',
+        company: vacante.empresa || 'Sin empresa',
+        location: vacante.ubicacion || 'Sin ubicación',
+        description: vacante.informacionAmpliada?.descripcion || 'Sin descripción',
+        responsibilities: vacante.informacionAmpliada?.palabrasClave || [],
+        contract: vacante.tipo_contrato.tipo,
+        salary: vacante.salario,
+        experience: vacante.requisitos.experiencia
+      }));
+
+      console.log(previsualItems)
+      setPrevisualData(previsualItems);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  // Función para manejar la búsqueda desde Nav_bar
+  const handleSearch = (term) => {
+    setSearchTerm(term); // Actualiza el estado del término de búsqueda
+    fetchData(term); // Llama a fetchData con el término de búsqueda
   };
 
   useEffect(() => {
-    fetchData();
-  }, [currentPage]); // Vuelve a cargar los datos cuando cambia la página
+    fetchData(searchTerm); // Llama a fetchData cuando cambia la página o el término de búsqueda
+  }, [currentPage]);
 
   return (
     <>
-      <Nav_bar />
+      <Nav_bar onSearch={handleSearch} /> {/* Pasa la función handleSearch como prop */}
       <div className="main-container">
-        {/* Contenedor de las tarjetas de previsualización */}
         <div className="previsual-container">
           {previsualData.map((item, index) => (
             <Previsual
               key={index}
-              title={item.title}
-              company={item.company}
-              location={item.location}
-              onClick={() => setSelectedJob(item)} // Actualiza el trabajo seleccionado
+              {...item} // Spread del item
+              onClick={() => setSelectedJob(item)}
             />
           ))}
           <Pagination
             currentPage={currentPage}
             totalItems={totalItems}
             itemsPerPage={itemsPerPage}
-            onPageChange={(page) => setCurrentPage(page)} // Cambia la página actual
+            onPageChange={(page) => setCurrentPage(page)}
           />
         </div>
-  
-        {/* Contenedor del detalle del trabajo */}
         <div className="desc-prev-container-app">
           {selectedJob ? (
             <DescPrev

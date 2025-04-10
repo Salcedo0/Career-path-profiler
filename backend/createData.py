@@ -237,7 +237,7 @@ for _ in range(100):
       if(palabraAleatoria not in palabrasClave):
         palabrasClave.append(palabraAleatoria)
 
-    descripcion = fake.text(max_nb_chars=random.randint(20, 40))
+    descripcion = fake.text(max_nb_chars=random.randint(100, 150))
     
     
     info_ampliada = {

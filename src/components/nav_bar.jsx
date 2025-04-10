@@ -1,4 +1,3 @@
-//Nav_bar.jsx
 import { useState } from 'react';
 import '../styles/nav_bar.css'; 
 import logo from '../assets/magneto.svg';
@@ -6,43 +5,43 @@ import magnifying_glass from '../assets/magnifying.svg';
 import iniciar_sesion from '../assets/iniciar_sesion.svg';
 import crear_cuenta from '../assets/crear_cuenta.svg';
 
-//cambiar la topofrafia de la pagina
-//hacer el nav bar mas dinamico y responsive
-
-
-
-function Nav_bar(){
-
+function Nav_bar({ onSearch }) { // Recibe la prop onSearch desde el padre
     const [search, setSearch] = useState("");
+
+    const handleKeyPress = (e) => {
+        if (e.key === 'Enter') {
+            if (onSearch) { // Llama a la función pasada desde el padre
+                onSearch(search);
+            }
+        }
+    };
 
     return (
         <div className='nav_bar'>
-            
             <img src={logo} alt='logo' className='nav_bar_logo' />  
 
             <div className="buscador_empleo">  
-            <input
-                type="text"
-                placeholder="Buscar empleo por ciudad, cargo, empresa o profesión"
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                className="search_input"
-            />
-            <img src={magnifying_glass} alt='magnifying_glass' className='nav_bar_magnifying_glass' />          
+                <input
+                    type="text"
+                    placeholder="Buscar empleo por ciudad, cargo, empresa o profesión"
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
+                    onKeyPress={handleKeyPress}
+                    className="search_input"
+                />
+                <img src={magnifying_glass} alt='magnifying_glass' className='nav_bar_magnifying_glass' />          
             </div>
 
             <button className='nav_button'>
-                <img src = {iniciar_sesion} alt='iniciar_sesion' className='nav_iniciar_sesion' />
+                <img src={iniciar_sesion} alt='iniciar_sesion' className='nav_iniciar_sesion' />
                 Iniciar sesión
             </button>               
             <button className='nav_button'>
-                <img src = {crear_cuenta} alt='crear_cuenta' className='nav_crear_cuenta' />    
+                <img src={crear_cuenta} alt='crear_cuenta' className='nav_crear_cuenta' />    
                 Crear cuenta
             </button>
-
-            
-
         </div>
     );
 }
+
 export default Nav_bar;

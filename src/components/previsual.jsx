@@ -13,7 +13,7 @@ const Previsual = ({ title, company, location, contract, salary, experience, lev
         <p className="previsual-company">{company || 'compañia'}</p>
         <p className="previsual-location">{location || 'mi casa'}</p>
         <p className="previsual-details">
-          {contract || 'definido'} {salary || 'mucho'}, {experience || 'nula'} de experiencia, {level || 'diez'}.
+          {contract || 'definido'}, {salary || 'mucho'}, {experience || 'nula'}.
         </p>
       </div>
       <div className="previsual-arrow">
