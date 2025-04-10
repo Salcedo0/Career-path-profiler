@@ -40,7 +40,7 @@ function App() {
         experience: vacante.requisitos.experiencia
       }));
 
-      console.log(previsualItems)
+      console.log(data)
       setPrevisualData(previsualItems);
     } catch (e) {
       console.log(e);
