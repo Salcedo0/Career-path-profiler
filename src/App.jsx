@@ -7,6 +7,7 @@ import Previsual from './components/previsual';
 import Pagination from './components/pagination';
 import DescPrev from './components/desc_prev';
 
+
 function App() {
   const [previsualData, setPrevisualData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1); // Página actual

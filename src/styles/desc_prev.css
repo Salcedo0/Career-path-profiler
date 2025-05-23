@@ -1,54 +1,293 @@
-.desc-prev-container {
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  padding: 16px;
-  background-color: #fff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  width: 100%; /* Asegura que ocupe todo el ancho disponible */
-  height: 100%; /* Asegura que ocupe toda la altura disponible */
-  box-sizing: border-box;
-  overflow-y: auto; /* Habilita el scroll vertical */
+/* desc_prev.css */
+
+/* Aplicar la fuente Inter a todos los elementos dentro de .desc-prev-container */
+.desc-prev-container * {
+    font-family: 'Inter', sans-serif;
+    box-sizing: border-box;
 }
+
+.desc-prev-container {
+    background-color: #ffffff; /* Fondo blanco principal */
+    border-radius: 12px;
+    padding: 25px 30px; /* Más padding para que se vea más espacioso */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); /* Sombra para el bloque completo */
+    width: 100%;
+    max-width: 950px; /* Ancho máximo para la vista de detalle */
+    margin: 20px auto; /* Centra el componente y añade margen */
+    position: relative;
+    overflow-y: auto; /* Habilita el scroll vertical si el contenido es demasiado largo */
+    max-height: calc(100vh - 40px);
+
+}
+.desc-prev-details-icons {
+    display: flex;
+    margin-top:20px;
+    gap: 10px; /* Espacio entre los íconos */
+    margin-bottom: 20px; /* Espacio entre los íconos y el encabezado */
+}
+/* Ocultar la barra de desplazamiento manteniendo la funcionalidad */
+.desc-prev-container::-webkit-scrollbar {
+    display: none;
+}
+
+.desc-prev-container {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+/* Encabezado principal (Icono G, Título, New, Corazón, Compartir) */
+.desc-prev-main-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start; /* Alinea los elementos de arriba */
+    margin-bottom: 20px;
+}
+
+.desc-prev-header-details {
+    display: flex;
+    align-items: center;
+    gap: 15px; /* Espacio entre el ícono G y el título */
+}
+
+.desc-prev-icon-wrapper {
+    width: 48px; /* Tamaño del icono G */
+    height: 48px;
+    border-radius: 10px; /* Bordes redondeados del cuadrado G */
+    background-color: #e8f5e9; /* Fondo verde claro para el icono G */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.desc-prev-icon {
+    width: 80%; /* Asegura que el logo interno sea visible */
+    height: 80%;
+    object-fit: contain;
+}
+
+/* Si usas texto para el icono G */
+.desc-prev-text-icon {
+    font-size: 24px;
+    font-weight: 600;
+    color: #4CAF50; /* Color del texto 'G' */
+}
+
 
 .desc-prev-title {
-  font-size: 20px;
-  font-weight: bold;
-  color: #333;
-  margin-bottom: 8px;
+    font-size: 26px; /* Título grande y prominente */
+    font-weight: 700; /* Extra bold */
+    color: #212121;
+    margin: 0;
+    line-height: 1.3;
 }
 
-.desc-prev-company {
-  font-size: 16px;
-  color: #666;
-  margin-bottom: 4px;
+.desc-prev-actions {
+    display: flex;
+    align-items: center;
+    gap: 15px; /* Espacio entre "New" y los íconos de acción */
+    flex-shrink: 0;
 }
 
-.desc-prev-location {
-  font-size: 14px;
-  color: #999;
-  margin-bottom: 16px;
+.desc-prev-new-label {
+    background-color: #e0f2f1;
+    color: #00796b;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    white-space: nowrap;
 }
 
-.desc-prev-content {
-  overflow-y: auto; /* Habilita el scroll vertical */
-  padding-right: 8px;
+.desc-prev-heart-share-icons {
+    display: flex;
+    gap: 10px; /* Espacio entre el corazón y el compartir */
 }
 
-.desc-prev-content h3 {
-  font-size: 16px;
-  font-weight: bold;
-  color: #333;
-  margin-top: 16px;
+.desc-prev-heart-icon,
+.desc-prev-share-icon {
+    font-size: 24px; /* Tamaño de los íconos de acción */
+    cursor: pointer;
+    color: #9e9e9e; /* Color por defecto */
+    transition: color 0.2s ease;
+    display: flex; /* Para centrar el carácter unicode si es necesario */
+    justify-content: center;
+    align-items: center;
+    width: 36px; /* Tamaño del área clickeable */
+    height: 36px;
+    border-radius: 50%; /* Fondo circular al pasar el mouse si se desea */
 }
 
-.desc-prev-content p,
-.desc-prev-content li {
-  font-size: 14px;
-  color: #555;
-  margin-bottom: 8px;
+.desc-prev-heart-icon span,
+.desc-prev-share-icon span {
+    color: inherit; /* Hereda el color del padre */
+    transition: color 0.2s ease;
 }
 
-.desc-prev-content ul {
-  padding-left: 20px;
-  list-style-type: disc;
+.desc-prev-heart-icon span.saved {
+    color: #e57373; /* Rojo si está guardado */
+}
+
+.desc-prev-heart-icon:hover,
+.desc-prev-share-icon:hover {
+    background-color: #f0f0f0; /* Fondo ligero al pasar el mouse */
+    color: #757575; /* Color ligeramente más oscuro al pasar el mouse */
+}
+
+.desc-prev-heart-icon:hover span {
+    color: #e57373; /* Corazón rojo al pasar el mouse */
+}
+
+
+/* Fila de información debajo del título (Empresa | Ubicación | Contrato | Salario) */
+.desc-prev-info-row {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px; /* Espacio entre elementos */
+    font-size: 15px;
+    color: #757575; /* Color de texto más suave */
+    margin-bottom: 20px;
+}
+
+.desc-prev-info-item {
+    display: flex;
+    align-items: center;
+    gap: 5px; /* Espacio entre el ícono y el texto en los ítems de info */
+}
+
+.desc-prev-info-item svg {
+    font-size: 16px;
+    color: #9e9e9e;
+}
+
+.desc-prev-company-name {
+    font-weight: 500; /* Google en medium weight */
+    color: #424242; /* Más oscuro que los otros detalles */
+}
+
+.desc-prev-info-divider {
+    font-weight: 300; /* Para el carácter '|' */
+    color: #bdbdbd;
+}
+
+/* Contenedor de tags de habilidades */
+.desc-prev-tag-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 25px; /* Espacio después de los tags */
+}
+
+.desc-prev-tag {
+    background-color: #f0f0f0;
+    color: #616161;
+    padding: 7px 14px; /* Ajuste de padding */
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+/* Información de publicación (Posted X days ago, applicants, urgent) */
+.desc-prev-post-info {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px; /* Espacio entre los elementos de información */
+    font-size: 14px;
+    color: #9e9e9e;
+    margin-bottom: 30px; /* Más espacio antes de la descripción del trabajo */
+}
+
+.desc-prev-post-info .desc-prev-info-item svg {
+    font-size: 15px;
+    color: #bdbdbd;
+}
+
+.desc-prev-info-divider-dot {
+    width: 4px;
+    height: 4px;
+    background-color: #bdbdbd;
+    border-radius: 50%;
+    margin: 0 2px;
+    flex-shrink: 0;
+}
+
+.desc-prev-urgent-label {
+    color: #d32f2f; /* Rojo para "Urgent" */
+    font-weight: 600;
+}
+
+
+/* Secciones de contenido: Títulos y Listas */
+.section-title {
+    font-size: 22px; /* Títulos de sección más grandes */
+    font-weight: 700; /* Bold */
+    color: #212121;
+    margin-top: 30px; /* Espacio antes de cada título de sección */
+    margin-bottom: 15px;
+}
+
+.section-title:first-of-type {
+    margin-top: 0; /* Elimina el margen superior para el primer título de sección */
+}
+
+.section-paragraph {
+    font-size: 16px;
+    line-height: 1.7; /* Mayor espaciado de línea para legibilidad */
+    color: #424242;
+    margin-bottom: 20px;
+}
+
+.section-list {
+    list-style-type: disc;
+    padding-left: 25px;
+    margin-bottom: 25px; /* Espacio después de cada lista */
+}
+
+.section-list li {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #424242;
+    margin-bottom: 10px; /* Espacio entre ítems de lista */
+}
+
+/* Botón "Apply Now" */
+.desc-prev-apply-section {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+    padding-top: 25px;
+    border-top: 1px solid #eee; /* Línea separadora */
+}
+
+.apply-now-button {
+    background-color: #00796b; /* Verde oscuro */
+    color: #fff;
+    padding: 15px 40px; /* Más padding para el botón */
+    border: none;
+    border-radius: 8px;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Espacio entre el ícono y el texto */
+}
+
+.apply-now-button span { /* Estilo para el ícono de flecha dentro del botón */
+    font-size: 20px;
+    line-height: 1;
+}
+
+.apply-now-button:hover {
+    background-color: #004d40;
+    transform: translateY(-2px);
+}
+
+.apply-now-button:active {
+    transform: translateY(0);
 }
