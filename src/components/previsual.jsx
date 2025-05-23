@@ -1,6 +1,6 @@
 import React from 'react';
 import '../styles/previsual.css';
-import placeholderIcon from '../assets/placeholder_prev.png';
+import placeholderIcon from '/public/magneto-logo.png'; // Importa la imagen correctamente
 
 let lastClickTime = null;
 let lastVacant = null;
