@@ -1,0 +1,155 @@
+/* src/styles/category_selector.css */
+
+/* Aplicar la fuente Inter a todos los elementos dentro del contenedor */
+.category-selector-container * {
+    font-family: 'Inter', sans-serif;
+    box-sizing: border-box;
+}
+
+.category-selector-container {
+    background-color: #f8f8f8; /* Fondo general de la página */
+    min-height: 100vh; /* Ocupa toda la altura de la ventana */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 20px; /* Padding superior e inferior para el contenido */
+    box-sizing: border-box; /* Asegura que el padding no cause overflow */
+}
+
+.category-selector-heading {
+    font-size: 32px;
+    font-weight: 700; /* Bold */
+    color: #212121;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.category-selector-subheading {
+    font-size: 18px;
+    color: #616161;
+    text-align: center;
+    max-width: 600px; /* Limita el ancho del texto */
+    margin-bottom: 40px; /* Espacio antes de la cuadrícula */
+    line-height: 1.5;
+}
+
+.categories-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Columnas responsivas */
+    gap: 20px; /* Espacio entre las tarjetas de categoría */
+    max-width: 900px; /* Ancho máximo de la cuadrícula */
+    width: 100%;
+    margin-bottom: 40px; /* Espacio antes del botón */
+}
+
+.category-card {
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.category-card:hover {
+    border-color: #00796b; /* Borde verde al pasar el mouse */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transform: translateY(-3px);
+}
+
+.category-card.selected {
+    border-color: #00796b; /* Borde verde cuando está seleccionado */
+    background-color: #e0f2f1; /* Fondo verde claro cuando está seleccionado */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.category-icon-wrapper {
+    width: 60px; /* Tamaño del círculo del ícono */
+    height: 60px;
+    border-radius: 50%;
+    background-color: #e0f2f1; /* Fondo verde claro para el círculo del ícono */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 15px;
+    transition: background-color 0.3s ease;
+}
+
+.category-card.selected .category-icon-wrapper {
+    background-color: #00796b; /* Fondo verde oscuro cuando seleccionado */
+}
+
+.category-icon {
+    font-size: 30px; /* Tamaño del ícono */
+    color: #00796b; /* Color del ícono */
+    transition: color 0.3s ease;
+}
+
+.category-card.selected .category-icon {
+    color: #ffffff; /* Color blanco para el ícono cuando seleccionado */
+}
+
+.category-title {
+    font-size: 18px;
+    font-weight: 600; /* Semi-bold */
+    color: #212121;
+    margin-bottom: 5px;
+}
+
+.category-subtitle {
+    font-size: 14px;
+    color: #757575;
+    margin: 0;
+}
+
+.continue-button {
+    background-color: #00796b; /* Verde oscuro */
+    color: #fff;
+    padding: 15px 35px; /* Más padding para el botón */
+    border: none;
+    border-radius: 8px;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Espacio entre el texto y la flecha */
+    margin-bottom: 25px; /* Espacio antes del disclaimer */
+}
+
+.continue-button:hover:not(:disabled) {
+    background-color: #004d40; /* Verde más oscuro al pasar el mouse */
+    transform: translateY(-2px);
+}
+
+.continue-button:disabled {
+    background-color: #bdbdbd; /* Gris cuando deshabilitado */
+    cursor: not-allowed;
+}
+
+.continue-button .arrow-icon {
+    font-size: 20px; /* Tamaño de la flecha */
+    line-height: 1;
+}
+
+.category-disclaimer {
+    font-size: 14px;
+    color: #9e9e9e;
+    text-align: center;
+}
+
+/* Ocultar la barra de desplazamiento manteniendo la funcionalidad para el cuerpo principal */
+body {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
+body::-webkit-scrollbar {
+    display: none;  /* Chrome, Safari, Opera*/
+}

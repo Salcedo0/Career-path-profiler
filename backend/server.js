@@ -1,9 +1,8 @@
 import express from 'express';
 import cors from 'cors';
-import { MongoClient, ObjectId } from 'mongodb';
+import { MongoClient } from 'mongodb';
 import dotenv from 'dotenv';
 import { getEmbedding } from "../utils/getEmbeddings.js";
-import { exec } from 'child_process';
 dotenv.config();
 
 
@@ -23,7 +22,7 @@ app.post('/search', async (req, res) => {
 
   const { term } = req.body
 
-  const collection = cliente.db("magneto").collection("jobs_excel");
+  const collection = cliente.db("magneto").collection("jobs");
 
   const embeddingTerm = await getEmbedding(term);
 
@@ -34,7 +33,7 @@ app.post('/search', async (req, res) => {
         path: "nombre_vacante_embedding",
         numCandidates: 200,
         limit: 10,
-        index: "search_excel"
+        index: "magneto_search"
       }
     },
     // {

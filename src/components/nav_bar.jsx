@@ -1,32 +1,67 @@
-import { useState } from 'react';
-import '../styles/nav_bar.css'; 
-import logo from '../assets/magneto.svg';
-import iniciar_sesion from '../assets/iniciar_sesion.svg';
-import crear_cuenta from '../assets/crear_cuenta.svg';
+import React, { useState } from 'react';
+import '../styles/nav_bar.css';
+import magnetoLogo from '../assets/magneto.svg'; 
 
-function Nav_bar({ onSearch }) { // Recibe la prop onSearch desde el padre
-    const [search, setSearch] = useState("");
+
+import {
+  FaSearch,     
+  FaBell,      
+  FaChevronDown 
+} from 'react-icons/fa';
+
+function Nav_bar({ onSearch }) {
+    const [searchTerm, setSearchTerm] = useState(""); 
+
+    const handleSearchChange = (e) => {
+        setSearchTerm(e.target.value);
+    };
 
     const handleKeyPress = (e) => {
         if (e.key === 'Enter') {
-            if (onSearch) { // Llama a la función pasada desde el padre
-                onSearch(search);
+            if (onSearch) {
+                onSearch(searchTerm);
             }
         }
     };
 
     return (
-        <div className='nav_bar'>
-            <img src={logo} alt='logo' className='nav_bar_logo' />  
+        <div className='nav-bar'>
+            <div className="nav-left">
+                <img src={magnetoLogo} alt='Magneto Logo' className='nav-bar-logo' />
+            </div>
 
-            <button className='nav_button'>
-                <img src={iniciar_sesion} alt='iniciar_sesion' className='nav_iniciar_sesion' />
-                Iniciar sesión
-            </button>               
-            <button className='nav_button'>
-                <img src={crear_cuenta} alt='crear_cuenta' className='nav_crear_cuenta' />    
-                Crear cuenta
-            </button>
+            <div className="nav-search-bar">
+                <FaSearch className="search-icon" />
+                <input
+                    type="text"
+                    placeholder="busca trabajos, compañías o personas"
+                    value={searchTerm}
+                    onChange={handleSearchChange}
+                    onKeyPress={handleKeyPress}
+                />
+            </div>
+
+            <div className="nav-right">
+                <nav className="nav-links">
+                    <a href="#" className="nav-link active">Home</a>
+                    <a href="#" className="nav-link">Trabajos</a>
+                    <a href="#" className="nav-link">Perfiles</a>
+                    <a href="#" className="nav-link">Mensajes</a>
+                </nav>
+
+                <div className="nav-profile-section">
+                    <div className="nav-notifications">
+                        <FaBell className="notification-icon" />
+                        <span className="notification-badge"></span> 
+                    </div>
+
+                    <div className="nav-user-profile">
+                        <img src="src\assets\foto_perfil.jpg" alt="User Avatar" className="user-avatar" /> 
+                        <span className="user-name">Juan Salcedo</span>
+                        <FaChevronDown className="dropdown-icon" />
+                    </div>
+                </div>
+            </div>
         </div>
     );
 }
