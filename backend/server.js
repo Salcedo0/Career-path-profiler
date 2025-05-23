@@ -1,6 +1,6 @@
 import express from 'express';
 import cors from 'cors';
-import { MongoClient } from 'mongodb';
+import { MongoClient, ObjectId } from 'mongodb';
 import dotenv from 'dotenv';
 import { getEmbedding } from "../utils/getEmbeddings.js";
 dotenv.config();
@@ -149,6 +149,71 @@ app.post('/track-time', async (req, res) => {
     res.status(200).json({ message: 'Tiempo registrado exitosamente' });
   } catch (error) {
     console.error('Error al guardar el tiempo:', error);
+    res.status(500).json({ error: 'Error interno del servidor' });
+  }
+});
+
+app.post('/api/signup', async (req, res) => {
+  const { name, password } = req.body;
+
+  if (!name || !password) {
+    return res.status(400).json({ error: 'El nombre y la contraseña son obligatorios' });
+  }
+
+  try {
+    const collection = cliente.db("magneto").collection("users");
+
+    // Verificar si el usuario ya existe
+    const existingUser = await collection.findOne({ name });
+
+    if (existingUser) {
+      // Si el usuario ya existe, devolver su ID y marcar como existente
+      return res.status(200).json({ userId: existingUser._id, existingUser: true });
+    }
+
+    // Crear un nuevo usuario con las variables iniciales vacías
+    const newUser = {
+      name,
+      password,
+      disliked_key_words: [],
+      key_words: [],
+      visited_vacants: [],
+    };
+
+    // Insertar el usuario en la base de datos
+    const result = await collection.insertOne(newUser);
+
+    // Devolver el ID del usuario creado
+    res.status(201).json({ userId: result.insertedId, existingUser: false });
+  } catch (error) {
+    console.error('Error al registrar el usuario:', error);
+    res.status(500).json({ error: 'Error interno del servidor' });
+  }
+});
+
+app.post('/api/update-keywords', async (req, res) => {
+  const { userId, keyWords } = req.body;
+
+  if (!userId || !keyWords) {
+    return res.status(400).json({ error: 'El userId y keyWords son obligatorios' });
+  }
+
+  try {
+    const collection = cliente.db("magneto").collection("users");
+
+    // Actualizar las key_words del usuario
+    const result = await collection.updateOne(
+      { _id: new ObjectId(userId) },
+      { $set: { key_words: keyWords } }
+    );
+
+    if (result.modifiedCount === 0) {
+      return res.status(404).json({ error: 'Usuario no encontrado' });
+    }
+
+    res.status(200).json({ message: 'Key words actualizadas correctamente' });
+  } catch (error) {
+    console.error('Error al actualizar las key words:', error);
     res.status(500).json({ error: 'Error interno del servidor' });
   }
 });

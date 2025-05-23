@@ -1,49 +1,71 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import '../styles/LogIn.css';
-import magnetoLogo from '/public/magneto-logo.png'; // Asegúrate de que esta ruta sea correcta para el logo
-
-// Importa íconos de React Icons (Fa para Font Awesome)
+import magnetoLogo from '/public/magneto-logo.png';
 import {
-  FaUser,       // Para nombre completo
-  FaEnvelope,   // Para email
-  FaLock,       // Para contraseña
-  FaEye,        // Para mostrar contraseña
-  FaEyeSlash,   // Para ocultar contraseña
-  FaArrowRight, // Para el botón Sign Up
-  FaGoogle,     // Para Google
-  FaLinkedinIn  // Para LinkedIn
+  FaUser,
+  FaLock,
+  FaEye,
+  FaEyeSlash,
+  FaArrowRight,
 } from 'react-icons/fa';
 
 const LogIn = ({
-  type = 'register', // 'register' o 'login'
+  type = 'register',
   logoSrc = magnetoLogo,
   title = "Create an Account",
   subtitle = "Join Magneto365 to start your journey",
-  onFormSubmit, // Función que se llama al enviar el formulario
-  onGoogleSignIn, // Función al hacer clic en Google
-  onLinkedInSignIn, // Función al hacer clic en LinkedIn
-  onToggleAuthMode // Función para cambiar entre registro/login
 }) => {
   const [fullName, setFullName] = useState('');
-  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [agreedToTerms, setAgreedToTerms] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-  const handleSubmit = (e) => {
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (onFormSubmit) {
-      onFormSubmit({ fullName, email, password, confirmPassword, agreedToTerms });
+
+    if (type === 'register') {
+      try {
+        const response = await fetch('http://localhost:5000/api/signup', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            name: fullName,
+            password,
+          }),
+        });
+
+        if (!response.ok) {
+          throw new Error('Error al registrar el usuario');
+        }
+
+        const data = await response.json();
+        console.log('Usuario registrado o existente. ID:', data.userId);
+
+        // Guardar el userId en localStorage
+        localStorage.setItem('userId', data.userId);
+
+        // Redirigir según si el usuario ya existía o es nuevo
+        if (data.existingUser) {
+          navigate('/app'); // Si el usuario ya existía, redirigir a la página principal
+        } else {
+          navigate('/suggestions'); // Si es un nuevo usuario, redirigir a las sugerencias
+        }
+      } catch (error) {
+        console.error('Error al registrar el usuario:', error);
+      }
     }
-    console.log("Formulario enviado:", { fullName, email, password, confirmPassword, agreedToTerms });
-    // Aquí puedes añadir lógica de validación o llamada a API
   };
 
-  const isSignUpDisabled = type === 'register' && (!fullName || !email || !password || !confirmPassword || !agreedToTerms || (password !== confirmPassword));
-  const isLoginDisabled = type === 'login' && (!email || !password);
-
+  const isSignUpDisabled =
+    type === 'register' &&
+    (!fullName || !password || !confirmPassword || !agreedToTerms || password !== confirmPassword);
 
   return (
     <div className="auth-container">
@@ -69,26 +91,18 @@ const LogIn = ({
           )}
 
           <div className="input-group">
-            <FaEnvelope className="input-icon" />
-            <input
-              type="email"
-              placeholder="your@email.com"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-          </div>
-
-          <div className="input-group">
             <FaLock className="input-icon" />
             <input
-              type={showPassword ? "text" : "password"}
+              type={showPassword ? 'text' : 'password'}
               placeholder="Create a password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
             />
-            <span className="password-toggle-icon" onClick={() => setShowPassword(!showPassword)}>
+            <span
+              className="password-toggle-icon"
+              onClick={() => setShowPassword(!showPassword)}
+            >
               {showPassword ? <FaEyeSlash /> : <FaEye />}
             </span>
           </div>
@@ -97,13 +111,16 @@ const LogIn = ({
             <div className="input-group">
               <FaLock className="input-icon" />
               <input
-                type={showConfirmPassword ? "text" : "password"}
+                type={showConfirmPassword ? 'text' : 'password'}
                 placeholder="Repeat your password"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 required
               />
-              <span className="password-toggle-icon" onClick={() => setShowConfirmPassword(!showConfirmPassword)}>
+              <span
+                className="password-toggle-icon"
+                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+              >
                 {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
               </span>
             </div>
@@ -119,7 +136,8 @@ const LogIn = ({
                 required
               />
               <label htmlFor="terms">
-                I agree to the <a href="#" className="link">Terms</a> and <a href="#" className="link">Privacy Policy</a>
+                I agree to the <a href="#" className="link">Terms</a> and{' '}
+                <a href="#" className="link">Privacy Policy</a>
               </label>
             </div>
           )}
@@ -127,30 +145,11 @@ const LogIn = ({
           <button
             type="submit"
             className="auth-button primary-button"
-            disabled={type === 'register' ? isSignUpDisabled : isLoginDisabled}
+            disabled={isSignUpDisabled}
           >
-            {type === 'register' ? 'Sign Up' : 'Sign In'} <FaArrowRight />
+            Sign Up <FaArrowRight />
           </button>
         </form>
-
-        <div className="auth-or-divider">
-          <span>or</span>
-        </div>
-
-        <button className="auth-button social-button" onClick={onGoogleSignIn}>
-          <FaGoogle className="social-icon" /> Sign up with Google
-        </button>
-
-        <button className="auth-button social-button" onClick={onLinkedInSignIn}>
-          <FaLinkedinIn className="social-icon" /> Sign up with LinkedIn
-        </button>
-
-        <p className="auth-footer-text">
-          {type === 'register' ? "Already have an account?" : "Don't have an account?"}
-          <a href="#" className="link" onClick={onToggleAuthMode}>
-            {type === 'register' ? "Sign In" : "Sign Up"}
-          </a>
-        </p>
       </div>
     </div>
   );
