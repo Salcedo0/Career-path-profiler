@@ -14,9 +14,9 @@ import {
 } from 'react-icons/fa';
 
 const jobCategories = [
-  { id: 'software-engineer', title: 'Ingeniero de Software', subtitle: 'Tecnología e IT', icon: FaLaptopCode },
-  { id: 'ui-ux-designer', title: 'Diseñador UI/UX', subtitle: 'Diseño y Creatividad', icon: FaPalette },
-  { id: 'project-manager', title: 'Gerente de Proyectos', subtitle: 'Gestión', icon: FaProjectDiagram },
+  { id: 'software-engineer', title: 'Ingenieria de Software', subtitle: 'Tecnología e IT', icon: FaLaptopCode },
+  { id: 'ui-ux-designer', title: 'Diseño UI/UX', subtitle: 'Diseño y Creatividad', icon: FaPalette },
+  { id: 'project-manager', title: 'Gerencia de Proyectos', subtitle: 'Gestión', icon: FaProjectDiagram },
   { id: 'marketing-specialist', title: 'Especialista en Marketing', subtitle: 'Marketing', icon: FaBullhorn },
   { id: 'data-analyst', title: 'Analista de Datos', subtitle: 'Analítica', icon: FaDatabase },
   { id: 'hr-specialist', title: 'Especialista en Recursos Humanos', subtitle: 'RRHH y Administración', icon: FaUserTie },

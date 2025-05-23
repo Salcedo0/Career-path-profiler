@@ -33,7 +33,9 @@ function Nav_bar({ onSearch }) {
     return (
         <div className='nav-bar'>
             <div className="nav-left">
-                <img src={magnetoLogo} alt='Magneto Logo' className='nav-bar-logo' />
+                <a href="/">
+                    <img src={magnetoLogo} alt='Magneto Logo' className='nav-bar-logo' />
+                </a>
             </div>
 
             <div className="nav-search-bar">
