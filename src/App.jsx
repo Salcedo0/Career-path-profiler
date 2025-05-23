@@ -1,119 +1,23 @@
 //App.jsx
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+import { Routes, Route } from 'react-router-dom';
 import './App.css';
 import Nav_bar from './components/nav_bar';
 import Footer from './components/Footer';
-import Previsual from './components/previsual';
-import Pagination from './components/pagination';
-import DescPrev from './components/desc_prev';
-
+import Login from './components/logIn';
+import SuggestionsNewUsers from './components/suggestions_new_user';
+import MainApp from './components/mainApp'; // Extrae la lógica principal de App.jsx a un nuevo componente
 
 function App() {
-  const [previsualData, setPrevisualData] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1); // Página actual
-  const [itemsPerPage] = useState(10); // Elementos por página
-  const [totalItems, setTotalItems] = useState(0); // Total de elementos
-  const [selectedJob, setSelectedJob] = useState(null); // Estado para el trabajo seleccionado
-  const [searchTerm, setSearchTerm] = useState(""); // Estado para el término de búsqueda
-
-  // Obtener la última palabra clave del usuario
-  const fetchLastKeyword = async () => {
-    try {
-      const response = await fetch('http://localhost:5000/api/user_keywords', {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        method: 'GET',
-      });
-      const data = await response.json();
-      const lastKeyword = data.key_words?.slice(-1)[0] || ""; // Obtener la última palabra clave o un string vacío
-      setSearchTerm(lastKeyword); // Establecer la última palabra clave como el término de búsqueda inicial
-    } catch (e) {
-      console.log("Error al obtener la última palabra clave:", e);
-    }
-  };
-
-  const fetchData = async (term = "") => {
-    try {
-      const response = await fetch('http://localhost:5000/search', {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        method: 'POST',
-        body: JSON.stringify({ term, limit: 10 }), // Usa el término de búsqueda
-      });
-      const data = await response.json();
-
-      setTotalItems(data.length);
-      const startIndex = (currentPage - 1) * itemsPerPage;
-
-      const previsualItems = data.map((vacante) => ({
-        title: vacante.title || 'Sin título',
-        empresa: vacante.empresa || 'Sin empresa',
-        city: vacante.city || 'Sin ubicación',
-        description: vacante.description || 'Sin descripción',
-        experience_education: vacante.experience_education || 'Sin experiencia/educación',
-        salary: vacante.salary || 'Sin salario',
-        key_words: vacante.key_words || 'Sin palabras clave',
-      }));
-
-      console.log(data);
-      setPrevisualData(previsualItems);
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
-  // Función para manejar la búsqueda desde Nav_bar
-  const handleSearch = (term) => {
-    setSearchTerm(term); // Actualiza el estado del término de búsqueda
-    fetchData(term); // Llama a fetchData con el término de búsqueda
-  };
-
-  useEffect(() => {
-    fetchLastKeyword(); // Obtener la última palabra clave al cargar el componente
-  }, []);
-
-  useEffect(() => {
-    fetchData(searchTerm); // Llama a fetchData cuando cambia la página o el término de búsqueda
-  }, [currentPage, searchTerm]);
-
   return (
     <>
-      <Nav_bar onSearch={handleSearch} /> {/* Pasa la función handleSearch como prop */}
-      <div className="main-container">
-        <div className="previsual-container">
-          {previsualData.map((item, index) => (
-            <Previsual
-              key={index}
-              {...item} // Spread del item
-              onClick={() => setSelectedJob(item)}
-            />
-          ))}
-          <Pagination
-            currentPage={currentPage}
-            totalItems={totalItems}
-            itemsPerPage={itemsPerPage}
-            onPageChange={(page) => setCurrentPage(page)}
-          />
-        </div>
-        <div className="desc-prev-container-app">
-          {selectedJob ? (
-            <DescPrev
-              title={selectedJob.title}
-              empresa={selectedJob.empresa}
-              city={selectedJob.city}
-              description={selectedJob.description}
-              experience_education={selectedJob.experience_education}
-              salary={selectedJob.salary}
-              key_words={selectedJob.key_words}
-            />
-          ) : (
-            <p>Selecciona un trabajo para ver los detalles.</p>
-          )}
-        </div>
-      </div>
-      <Footer />
+      <Nav_bar /> {/* Navbar visible en todas las páginas */}
+      <Routes>
+        <Route path="/" element={<Login />} />
+        <Route path="/suggestions" element={<SuggestionsNewUsers />} />
+        <Route path="/app" element={<MainApp />} />
+      </Routes>
+      <Footer /> {/* Footer visible en todas las páginas */}
     </>
   );
 }

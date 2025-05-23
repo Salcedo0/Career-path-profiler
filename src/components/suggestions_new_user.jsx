@@ -1,54 +1,80 @@
 import React, { useState } from 'react';
-import '../styles/suggestions_new_users.css'; // Asegúrate de tener el CSS correspondiente
-
-// Importa íconos de React Icons para las categorías
-// Asegúrate de tenerlos instalados: npm install react-icons
+import { useNavigate } from 'react-router-dom'; // Importar useNavigate
+import '../styles/suggestions_new_users.css';
 import {
-  FaLaptopCode,    // Software Engineer
-  FaPalette,       // UI/UX Designer
-  FaProjectDiagram, // Project Manager
-  FaBullhorn,      // Marketing Specialist
-  FaDatabase,      // Data Analyst
-  FaUserTie,       // HR Specialist
-  FaHandshake,     // Sales Executive
-  FaHeadset        // Customer Support
+  FaLaptopCode,
+  FaPalette,
+  FaProjectDiagram,
+  FaBullhorn,
+  FaDatabase,
+  FaUserTie,
+  FaHandshake,
+  FaHeadset,
 } from 'react-icons/fa';
 
-// Array de ejemplo para las categorías (puedes pasarlo como prop o gestionarlo internamente)
 const jobCategories = [
-  { id: 'software-engineer', title: 'Software Engineer', subtitle: 'Tech & IT', icon: FaLaptopCode },
-  { id: 'ui-ux-designer', title: 'UI/UX Designer', subtitle: 'Design & Creative', icon: FaPalette },
-  { id: 'project-manager', title: 'Project Manager', subtitle: 'Management', icon: FaProjectDiagram },
-  { id: 'marketing-specialist', title: 'Marketing Specialist', subtitle: 'Marketing', icon: FaBullhorn },
-  { id: 'data-analyst', title: 'Data Analyst', subtitle: 'Analytics', icon: FaDatabase },
-  { id: 'hr-specialist', title: 'HR Specialist', subtitle: 'HR & Admin', icon: FaUserTie },
-  { id: 'sales-executive', title: 'Sales Executive', subtitle: 'Sales', icon: FaHandshake },
-  { id: 'customer-support', title: 'Customer Support', subtitle: 'Support', icon: FaHeadset },
+  { id: 'software-engineer', title: 'Ingeniero de Software', subtitle: 'Tecnología e IT', icon: FaLaptopCode },
+  { id: 'ui-ux-designer', title: 'Diseñador UI/UX', subtitle: 'Diseño y Creatividad', icon: FaPalette },
+  { id: 'project-manager', title: 'Gerente de Proyectos', subtitle: 'Gestión', icon: FaProjectDiagram },
+  { id: 'marketing-specialist', title: 'Especialista en Marketing', subtitle: 'Marketing', icon: FaBullhorn },
+  { id: 'data-analyst', title: 'Analista de Datos', subtitle: 'Analítica', icon: FaDatabase },
+  { id: 'hr-specialist', title: 'Especialista en Recursos Humanos', subtitle: 'RRHH y Administración', icon: FaUserTie },
+  { id: 'sales-executive', title: 'Ejecutivo de Ventas', subtitle: 'Ventas', icon: FaHandshake },
+  { id: 'customer-support', title: 'Soporte al Cliente', subtitle: 'Atención al Cliente', icon: FaHeadset },
 ];
 
 const CategorySelector = ({
-  heading = "What are you interested in?",
-  subheading = "Select the job categories and roles you're most interested in. This helps us personalize your job feed and recommendations.",
-  categories = jobCategories, // Permite pasar las categorías como prop
-  onContinue, // Función que se ejecuta al hacer clic en "Continue"
-  disclaimer = "You can update your interests anytime in your profile settings."
+  heading = "¿Qué te interesa?",
+  subheading = "Selecciona las categorías de trabajo y roles que más te interesan. Esto nos ayuda a personalizar tu feed de trabajos y recomendaciones.",
+  categories = jobCategories,
+  disclaimer = "Puedes actualizar tus intereses en cualquier momento desde la configuración de tu perfil.",
 }) => {
   const [selectedCategories, setSelectedCategories] = useState([]);
+  const navigate = useNavigate(); // Inicializar useNavigate
 
   const handleCategoryClick = (categoryId) => {
-    setSelectedCategories(prevSelected =>
+    setSelectedCategories((prevSelected) =>
       prevSelected.includes(categoryId)
-        ? prevSelected.filter(id => id !== categoryId) // Deseleccionar
-        : [...prevSelected, categoryId] // Seleccionar
+        ? prevSelected.filter((id) => id !== categoryId)
+        : [...prevSelected, categoryId]
     );
   };
 
-  const handleContinueClick = () => {
-    if (onContinue) {
-      onContinue(selectedCategories);
+  const handleContinueClick = async () => {
+    const userId = localStorage.getItem('userId'); // Recuperar el userId del localStorage
+
+    if (!userId) {
+      console.error('No se encontró el userId en localStorage');
+      return;
     }
-    console.log("Categorías seleccionadas:", selectedCategories);
-    // Aquí podrías navegar a la siguiente página o guardar las selecciones
+
+    try {
+      const response = await fetch('http://localhost:5000/api/update-keywords', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          userId,
+          keyWords: selectedCategories,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Error al actualizar las key words');
+      }
+
+      const data = await response.json();
+      console.log(data.message);
+
+      // Aquí podrías redirigir al usuario a la página principal
+      console.log('Categorías seleccionadas guardadas correctamente:', selectedCategories);
+
+      // Navegar a la página principal
+      navigate('/app');
+    } catch (error) {
+      console.error('Error al guardar las categorías seleccionadas:', error);
+    }
   };
 
   return (
@@ -57,8 +83,8 @@ const CategorySelector = ({
       <p className="category-selector-subheading">{subheading}</p>
 
       <div className="categories-grid">
-        {categories.map(category => {
-          const IconComponent = category.icon; // Componente de ícono de React Icons
+        {categories.map((category) => {
+          const IconComponent = category.icon;
           const isSelected = selectedCategories.includes(category.id);
           return (
             <div
@@ -79,9 +105,9 @@ const CategorySelector = ({
       <button
         className="continue-button"
         onClick={handleContinueClick}
-        disabled={selectedCategories.length === 0} // Deshabilita el botón si no hay selecciones
+        disabled={selectedCategories.length === 0}
       >
-        Continue to Personalized Feed <span className="arrow-icon">&#8594;</span>
+        Continuar a tu Feed Personalizado <span className="arrow-icon">&#8594;</span>
       </button>
 
       <p className="category-disclaimer">{disclaimer}</p>
