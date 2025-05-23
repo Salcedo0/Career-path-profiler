@@ -22,7 +22,7 @@ app.post('/search', async (req, res) => {
 
   const { term } = req.body
 
-  const collection = cliente.db("magneto").collection("jobs");
+  const collection = cliente.db("magneto").collection("jobs_excel");
 
   const embeddingTerm = await getEmbedding(term);
 
@@ -33,7 +33,7 @@ app.post('/search', async (req, res) => {
         path: "nombre_vacante_embedding",
         numCandidates: 200,
         limit: 10,
-        index: "magneto_search"
+        index: "search_excel"
       }
     },
     // {
@@ -52,7 +52,6 @@ app.post('/search', async (req, res) => {
     }
   ]).toArray();
 
-  console.log(results)
 
   cliente.connect();
 
@@ -100,6 +99,9 @@ app.get('/api/user_keywords', async (req, res) => {
     }
 
     res.status(200).json({ key_words: user.key_words || [] });
+
+    console.log('Palabras clave del usuario:', user.key_words);
+
   } catch (error) {
     console.error('Error al obtener las palabras clave del usuario:', error);
     res.status(500).json({ error: 'Error al obtener las palabras clave del usuario' });

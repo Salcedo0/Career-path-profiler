@@ -24,6 +24,12 @@ function Nav_bar({ onSearch }) {
         }
     };
 
+    const handleSearchClick = () => {
+        if (onSearch) {
+            onSearch(searchTerm); // Llamar a la función onSearch con el término de búsqueda
+        }
+    };
+
     return (
         <div className='nav-bar'>
             <div className="nav-left">
@@ -39,6 +45,7 @@ function Nav_bar({ onSearch }) {
                     onChange={handleSearchChange}
                     onKeyPress={handleKeyPress}
                 />
+                <button onClick={handleSearchClick}></button>
             </div>
 
             <div className="nav-right">
