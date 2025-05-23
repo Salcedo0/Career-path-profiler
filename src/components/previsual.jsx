@@ -42,7 +42,7 @@ const Previsual = ({
         </div>
 
         {/* Palabras clave */}
-        {key_words && (
+        {/* {key_words && (
           <div className="previsual-keywords">
             <h4>Palabras Clave:</h4>
             <ul>
@@ -51,7 +51,7 @@ const Previsual = ({
               ))}
             </ul>
           </div>
-        )}
+        )} */}
       </div>
 
       {/* Enlace "View Details" */}

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/LogIn.css';
 import magnetoLogo from '/public/magneto-logo.png';
+import Nav_bar from './nav_bar';
 import {
   FaUser,
   FaLock,
@@ -68,6 +69,8 @@ const LogIn = ({
     (!fullName || !password || !confirmPassword || !agreedToTerms || password !== confirmPassword);
 
   return (
+    <>
+    <Nav_bar />
     <div className="auth-container">
       <div className="auth-card">
         <div className="auth-header">
@@ -152,6 +155,7 @@ const LogIn = ({
         </form>
       </div>
     </div>
+    </>
   );
 };
 

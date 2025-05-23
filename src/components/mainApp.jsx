@@ -2,6 +2,8 @@ import React, { useEffect, useState, useRef } from 'react';
 import Previsual from './previsual';
 import Pagination from './pagination';
 import DescPrev from './desc_prev';
+import Nav_bar from './nav_bar';
+
 
 function MainApp() {
   const [previsualData, setPrevisualData] = useState([]);
@@ -15,18 +17,31 @@ function MainApp() {
   const previousJobRef = useRef(null); // Referencia para la previsual-card anterior
 
   const fetchLastKeyword = async () => {
+    const userId = localStorage.getItem('userId'); // Obtener el userId del localStorage
+
+    if (!userId) {
+      console.error('No se encontró el userId en localStorage');
+      return;
+    }
+
     try {
       const response = await fetch('http://localhost:5000/api/user_keywords', {
+        method: 'POST', // Cambiar a POST para enviar datos
         headers: {
           'Content-Type': 'application/json',
         },
-        method: 'GET',
+        body: JSON.stringify({ userId }), // Enviar el userId en el cuerpo de la solicitud
       });
+
+      if (!response.ok) {
+        throw new Error('Error al obtener la última palabra clave');
+      }
+
       const data = await response.json();
-      const lastKeyword = data.key_words?.slice(-1)[0] || "";
-      setSearchTerm(lastKeyword);
+      const lastKeyword = data.key_words?.slice(-1)[0] || ""; // Obtener la última palabra clave
+      setSearchTerm(lastKeyword); // Actualizar el término de búsqueda
     } catch (e) {
-      console.log("Error al obtener la última palabra clave:", e);
+      console.error('Error al obtener la última palabra clave:', e);
     }
   };
 
@@ -56,6 +71,12 @@ function MainApp() {
     } catch (e) {
       console.log(e);
     }
+  };
+
+    // Función para manejar la búsqueda desde Nav_bar
+  const handleSearch = (term) => {
+    setSearchTerm(term); // Actualiza el estado del término de búsqueda
+    fetchData(term); // Llama a fetchData con el término de búsqueda
   };
 
   const handleJobClick = (job) => {
@@ -115,6 +136,8 @@ function MainApp() {
   }, [currentPage, searchTerm]);
 
   return (
+    <>
+    <Nav_bar onSearch={handleSearch} /> {/* Pasa la función handleSearch como prop */}
     <div className="main-container">
       <div className="previsual-container">
         {previsualData.map((item, index) => (
@@ -147,6 +170,7 @@ function MainApp() {
         )}
       </div>
     </div>
+    </>
   );
 }
 
