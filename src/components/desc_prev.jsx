@@ -13,9 +13,12 @@ import {
 
 
 const DescPrev = ({
+
+  experience_education, 
+  key_words 
   title,
-  company,
-  location,
+  empresa,
+  city,
   contract, // Nuevo: tipo de contrato
   salary,   // Nuevo: rango salarial
   isNew,    // Nuevo: para la etiqueta "New"
@@ -41,14 +44,14 @@ const DescPrev = ({
           </div>
         </div>
 
-        <p className="desc-prev-company">{company || 'Nombre de la Empresa'}</p>
+        <p className="desc-prev-company">{empresa || 'Nombre de la Empresa'}</p>
 
         {/* Detalles de ubicación, contrato, salario */}
         <div className="desc-prev-details">
           <div className='desc-prev-details-icons'>
             <span>
               <FaMapMarkerAlt />
-              {location || 'Ubicación'}
+              {city || 'Ubicación'}
             </span>
             <span>
               <FaBriefcase />
@@ -82,9 +85,8 @@ const DescPrev = ({
           <>
             <h3 className="section-title">Responsibilities</h3>
             <ul className="section-list">
-              {responsibilities.map((item, index) => (
-                <li key={index}>{item}</li>
-              ))}
+              {experience_education || '1 año'}
+              {key_words || '...'}
             </ul>
           </>
         )}
@@ -120,6 +122,7 @@ const DescPrev = ({
           {/* Si usas react-icons: <MdSend /> */}
           Apply Now
         </button>
+
       </div>
     </div>
   );

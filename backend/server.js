@@ -22,7 +22,7 @@ app.post('/search', async (req, res) => {
 
   const { term } = req.body
 
-  const collection = cliente.db("magneto").collection("jobs");
+  const collection = cliente.db("magneto").collection("jobs_excel");
 
   const embeddingTerm = await getEmbedding(term);
 
@@ -33,7 +33,7 @@ app.post('/search', async (req, res) => {
         path: "nombre_vacante_embedding",
         numCandidates: 200,
         limit: 10,
-        index: "magneto_search"
+        index: "search_excel"
       }
     },
     // {
