@@ -10,41 +10,36 @@ export const createFieldEmbedding = async() => {
 
     try {
 
-        client.connect();
-
+        await client.connect();
         const collection = client.db("magneto").collection("jobs_excel");
-
         const documents = await collection.find().toArray();
 
-        const updateDocuments = [];
+        const batchSize = 10;
+        for (let i = 0; i < documents.length; i += batchSize) {
+            const batch = documents.slice(i, i + batchSize);
+            const updateDocuments = [];
 
-        await Promise.all(documents.map(async doc => {
-
-            const embedding = await getEmbedding(doc.title);
-
-            // Add the embedding to an array of update operations
-            updateDocuments.push(
-                {
-                    updateOne: { 
+            for (const doc of batch) {
+                const embedding = await getEmbedding(doc.title);
+                updateDocuments.push({
+                    updateOne: {
                         filter: { "_id": doc._id },
                         update: { $set: { "nombre_vacante_embedding": embedding } }
                     }
-                }
-           )
-       }));
+                });
+            }
 
-       // Continue processing documents if an error occurs during an operation
-       const options = { ordered: false };
-
-       // Update documents with the new embedding field
-       const result = await collection.bulkWrite(updateDocuments, options); 
-       console.log("Count of documents updated: " + result.modifiedCount); 
-            
+            if (updateDocuments.length > 0) {
+                const options = { ordered: false };
+                const result = await collection.bulkWrite(updateDocuments, options);
+                console.log(`Batch ${i / batchSize + 1}: ${result.modifiedCount} documentos actualizados`);
+            }
+        }
     } catch (err) {
         console.log(err.stack);
-    }
-    finally {
+    } finally {
         await client.close();
     }
 }
+
 createFieldEmbedding().catch(console.dir);
