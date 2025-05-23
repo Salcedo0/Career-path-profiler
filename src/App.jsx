@@ -30,14 +30,13 @@ function App() {
       const startIndex = (currentPage - 1) * itemsPerPage;
 
       const previsualItems = data.map(vacante => ({
-        title: vacante.nombre_vacante || 'Sin título',
-        company: vacante.empresa || 'Sin empresa',
-        location: vacante.ubicacion || 'Sin ubicación',
-        description: vacante.informacionAmpliada?.descripcion || 'Sin descripción',
-        responsibilities: vacante.informacionAmpliada?.palabrasClave || [],
-        contract: vacante.tipo_contrato.tipo,
-        salary: vacante.salario,
-        experience: vacante.requisitos.experiencia
+        title: vacante.title || 'Sin título',
+        empresa: vacante.empresa || 'Sin empresa',
+        city: vacante.city || 'Sin ubicación',
+        description: vacante.description || 'Sin descripción',
+        experience_education: vacante.experience_education || 'Sin experiencia/educación',
+        salary: vacante.salary || 'Sin salario',
+        key_words: vacante.key_words || 'Sin palabras clave'
       }));
 
       console.log(data)
@@ -80,11 +79,12 @@ function App() {
           {selectedJob ? (
             <DescPrev
               title={selectedJob.title}
-              company={selectedJob.company}
-              location={selectedJob.location}
+              empresa={selectedJob.empresa}
+              city={selectedJob.city}
               description={selectedJob.description}
-              responsibilities={selectedJob.responsibilities}
-              requirements={selectedJob.requirements}
+              experience_education={selectedJob.experience_education}
+              salary={selectedJob.salary}
+              key_words={selectedJob.key_words}
             />
           ) : (
             <p>Selecciona un trabajo para ver los detalles.</p>
