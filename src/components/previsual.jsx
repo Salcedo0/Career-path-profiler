@@ -55,7 +55,7 @@ const Previsual = ({
       </div>
 
       {/* Enlace "View Details" */}
-      <a href="#" className="previsual-view-details">View Details</a>
+      <a href="#" className="previsual-view-details">Ver Detalles</a>
     </div>
   );
 };

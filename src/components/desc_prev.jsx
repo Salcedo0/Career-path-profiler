@@ -45,13 +45,13 @@ const DescPrev = ({
         </div>
       </div>
 
-      {/* Descripción */}
+      
       <div className="desc-prev-description">
         <h3>Descripción del Trabajo</h3>
         <p>{description || 'No hay descripción disponible.'}</p>
       </div>
 
-      {/* Palabras clave */}
+      
       {key_words && (
         <div className="desc-prev-keywords">
           <h3>Palabras Clave</h3>
@@ -63,11 +63,10 @@ const DescPrev = ({
         </div>
       )}
 
-      {/* Botón "Apply Now" */}
       <div className="desc-prev-apply-section">
         <button className="apply-now-button">
           <FaPaperPlane className="apply-now-icon" />
-          Apply Now
+          Aplique ahora
         </button>
       </div>
     </div>
