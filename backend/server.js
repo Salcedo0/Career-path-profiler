@@ -87,8 +87,12 @@ app.post('/api/visited_vacant', async (req, res) => {
   }
 });
 
-app.get('/api/user_keywords', async (req, res) => {
-  const userId = "68301050ddf230c5943587c0"; // Cambia esto por el ID del usuario logueado
+app.post('/api/user_keywords', async (req, res) => {
+  const { userId } = req.body; // Obtener el userId del cuerpo de la solicitud
+
+  if (!userId) {
+    return res.status(400).json({ error: 'El userId es obligatorio' });
+  }
 
   try {
     const collection = cliente.db("magneto").collection("users");
@@ -101,7 +105,6 @@ app.get('/api/user_keywords', async (req, res) => {
     res.status(200).json({ key_words: user.key_words || [] });
 
     console.log('Palabras clave del usuario:', user.key_words);
-
   } catch (error) {
     console.error('Error al obtener las palabras clave del usuario:', error);
     res.status(500).json({ error: 'Error al obtener las palabras clave del usuario' });

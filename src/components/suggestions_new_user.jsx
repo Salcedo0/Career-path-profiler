@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom'; // Importar useNavigate
 import '../styles/suggestions_new_users.css';
+import Nav_bar from './nav_bar';
 import {
   FaLaptopCode,
   FaPalette,
@@ -78,6 +79,8 @@ const CategorySelector = ({
   };
 
   return (
+    <>
+      <Nav_bar />
     <div className="category-selector-container">
       <h1 className="category-selector-heading">{heading}</h1>
       <p className="category-selector-subheading">{subheading}</p>
@@ -112,6 +115,7 @@ const CategorySelector = ({
 
       <p className="category-disclaimer">{disclaimer}</p>
     </div>
+    </>
   );
 };
 
