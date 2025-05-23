@@ -1,6 +1,6 @@
 import React from 'react';
 import '../styles/previsual.css';
-import placeholderIcon from '../assets/placeholder_prev.png'; // Importa la imagen correctamente
+import placeholderIcon from '/public/magneto-logo.png'; // Importa la imagen correctamente
 
 const Previsual = ({ title, company, location, contract, salary, experience, level, onClick }) => {
   return (
