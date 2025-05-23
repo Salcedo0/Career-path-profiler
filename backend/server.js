@@ -1,8 +1,9 @@
 import express from 'express';
 import cors from 'cors';
-import { MongoClient } from 'mongodb';
+import { MongoClient, ObjectId } from 'mongodb';
 import dotenv from 'dotenv';
 import { getEmbedding } from "../utils/getEmbeddings.js";
+import { exec } from 'child_process';
 dotenv.config();
 
 
@@ -58,6 +59,73 @@ app.post('/search', async (req, res) => {
 
   res.json(results);
 
+});
+
+app.post('/api/visited_vacant', async (req, res) => {
+  const { userId, vacant, key_words } = req.body;
+
+  if (!userId || !vacant || !key_words) {
+    return res.status(400).json({ error: 'Faltan datos requeridos: userId, vacant o key_words' });
+  }
+
+  try {
+    const collection = cliente.db("magneto").collection("users");
+
+    // Actualizar visited_vacants y key_words del usuario
+    await collection.updateOne(
+      { _id: new ObjectId(userId) },
+      {
+        $addToSet: { 
+          visited_vacants: vacant, // Agregar la vacante visitada
+          key_words: { $each: key_words } // Agregar palabras clave únicas
+        }
+      }
+    );
+
+    res.status(200).json({ message: 'Vacante y palabras clave guardadas exitosamente' });
+  } catch (error) {
+    console.error('Error al guardar la vacante:', error);
+    res.status(500).json({ error: 'Error al guardar la vacante' });
+  }
+});
+
+app.get('/api/user_keywords', async (req, res) => {
+  const userId = "68301050ddf230c5943587c0"; // Cambia esto por el ID del usuario logueado
+
+  try {
+    const collection = cliente.db("magneto").collection("users");
+    const user = await collection.findOne({ _id: new ObjectId(userId) });
+
+    if (!user) {
+      return res.status(404).json({ error: 'Usuario no encontrado' });
+    }
+
+    res.status(200).json({ key_words: user.key_words || [] });
+  } catch (error) {
+    console.error('Error al obtener las palabras clave del usuario:', error);
+    res.status(500).json({ error: 'Error al obtener las palabras clave del usuario' });
+  }
+});
+
+// Endpoint para ejecutar search.py y obtener recomendaciones
+app.get('/api/recommendations', (req, res) => {
+  const title = "Analista de Información"; // Cambia esto si necesitas un título dinámico
+
+  // Ejecutar el script Python con el título como argumento
+  exec(`python c:/Users/USER/Desktop/progressive_profiling_magneto/Career-path-profiler/backend/search.py "${title}"`, (error, stdout, stderr) => {
+    if (error) {
+      console.error(`Error al ejecutar el script Python: ${error.message}`);
+      return res.status(500).json({ error: 'Error al ejecutar el script Python' });
+    }
+    if (stderr) {
+      console.error(`Error en el script Python: ${stderr}`);
+      return res.status(500).json({ error: 'Error en el script Python' });
+    }
+
+    // Parsear la salida del script Python y enviarla como respuesta
+    console.log(`Recomendaciones para "${title}":`, stdout);
+    res.status(200).json({ recommendations: JSON.parse(stdout) });
+  });
 });
 
 app.listen(port, () => {
