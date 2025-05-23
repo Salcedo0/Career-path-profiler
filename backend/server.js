@@ -61,6 +61,7 @@ app.post('/search', async (req, res) => {
 
 });
 
+<<<<<<< HEAD
 app.post('/api/visited_vacant', async (req, res) => {
   const { userId, vacant, key_words } = req.body;
 
@@ -128,6 +129,34 @@ app.get('/api/recommendations', (req, res) => {
   });
 });
 
+=======
+
+app.post('/track-time', async (req, res) => {
+  const { userId, jobId, timeSpent } = req.body;
+
+  if (!userId || !jobId || !timeSpent) {
+    return res.status(400).json({ error: 'Faltan datos requeridos: userId, jobId o timeSpent' });
+  }
+
+  try {
+    const collection = cliente.db("magneto").collection("user_time_tracking");
+
+    
+    await collection.insertOne({
+      userId,
+      jobId,
+      timeSpent,
+      timestamp: new Date()
+    });
+
+    res.status(200).json({ message: 'Tiempo registrado exitosamente' });
+  } catch (error) {
+    console.error('Error al guardar el tiempo:', error);
+    res.status(500).json({ error: 'Error interno del servidor' });
+  }
+});
+
+>>>>>>> edd471b06b6bff621bafb977e03c99948abdc3e2
 app.listen(port, () => {
   console.log('Example app listening on port ' + port)
 })
