@@ -14,7 +14,24 @@ function App() {
   const [itemsPerPage] = useState(10); // Elementos por página
   const [totalItems, setTotalItems] = useState(0); // Total de elementos
   const [selectedJob, setSelectedJob] = useState(null); // Estado para el trabajo seleccionado
-  const [searchTerm, setSearchTerm] = useState("Ingeniero"); // Estado para el término de búsqueda
+  const [searchTerm, setSearchTerm] = useState(""); // Estado para el término de búsqueda
+
+  // Obtener la última palabra clave del usuario
+  const fetchLastKeyword = async () => {
+    try {
+      const response = await fetch('http://localhost:5000/api/user_keywords', {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        method: 'GET',
+      });
+      const data = await response.json();
+      const lastKeyword = data.key_words?.slice(-1)[0] || ""; // Obtener la última palabra clave o un string vacío
+      setSearchTerm(lastKeyword); // Establecer la última palabra clave como el término de búsqueda inicial
+    } catch (e) {
+      console.log("Error al obtener la última palabra clave:", e);
+    }
+  };
 
   const fetchData = async (term = "") => {
     try {
@@ -23,24 +40,24 @@ function App() {
           'Content-Type': 'application/json',
         },
         method: 'POST',
-        body: JSON.stringify({ term, limit: 10 }) // Usa el término de búsqueda
-      }); 
+        body: JSON.stringify({ term, limit: 10 }), // Usa el término de búsqueda
+      });
       const data = await response.json();
 
       setTotalItems(data.length);
       const startIndex = (currentPage - 1) * itemsPerPage;
 
-      const previsualItems = data.map(vacante => ({
+      const previsualItems = data.map((vacante) => ({
         title: vacante.title || 'Sin título',
         empresa: vacante.empresa || 'Sin empresa',
         city: vacante.city || 'Sin ubicación',
         description: vacante.description || 'Sin descripción',
         experience_education: vacante.experience_education || 'Sin experiencia/educación',
         salary: vacante.salary || 'Sin salario',
-        key_words: vacante.key_words || 'Sin palabras clave'
+        key_words: vacante.key_words || 'Sin palabras clave',
       }));
 
-      console.log(data)
+      console.log(data);
       setPrevisualData(previsualItems);
     } catch (e) {
       console.log(e);
@@ -54,8 +71,12 @@ function App() {
   };
 
   useEffect(() => {
+    fetchLastKeyword(); // Obtener la última palabra clave al cargar el componente
+  }, []);
+
+  useEffect(() => {
     fetchData(searchTerm); // Llama a fetchData cuando cambia la página o el término de búsqueda
-  }, [currentPage]);
+  }, [currentPage, searchTerm]);
 
   return (
     <>
