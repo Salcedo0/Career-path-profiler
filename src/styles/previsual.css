@@ -119,16 +119,16 @@
 }
 
 .previsual-heart-icon span {
-    color: #bdbdbd;
-    transition: color 0.2s ease;
+  color: #bdbdbd; /* Color gris por defecto */
+  transition: color 0.3s ease;
 }
 
 .previsual-heart-icon span.saved {
-    color: #e57373;
+  color: #e57373; /* Color rojo cuando está guardado */
 }
 
 .previsual-heart-icon:hover span {
-    color: #e57373;
+  color: #e57373; /* Color rojo al pasar el mouse */
 }
 
 .previsual-view-details {

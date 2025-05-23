@@ -96,36 +96,36 @@ function MainApp() {
     setSelectedJob(job); // Actualizar la vacante seleccionada
   };
 
-  const saveVisitedVacant = async (job) => {
-    const userId = localStorage.getItem('userId'); // Obtener el userId del localStorage
-    if (!userId) {
-      console.error('No se encontró el userId en localStorage');
-      return;
+const saveVisitedVacant = async (job) => {
+  const userId = localStorage.getItem('userId'); // Obtener el userId del localStorage
+  if (!userId) {
+    console.error('No se encontró el userId en localStorage');
+    return;
+  }
+
+  try {
+    const response = await fetch('http://localhost:5000/api/visited_vacant', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        userId,
+        vacant: job.title, // Enviar el título de la vacante
+        key_words: job.key_words.replace('Palabras clave: ', '').split(',').map(keyword => keyword.trim()), // Filtrar y limpiar las palabras clave
+      }),
+    });
+
+    if (!response.ok) {
+      throw new Error('Error al guardar la vacante visitada');
     }
 
-    try {
-      const response = await fetch('http://localhost:5000/api/visited_vacant', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          userId,
-          vacant: job.title, // Guardar el título de la vacante
-          key_words: job.key_words.split(','), // Guardar las palabras clave
-        }),
-      });
-
-      if (!response.ok) {
-        throw new Error('Error al guardar la vacante visitada');
-      }
-
-      const data = await response.json();
-      console.log('Vacante guardada exitosamente:', data.message);
-    } catch (error) {
-      console.error('Error al guardar la vacante visitada:', error);
-    }
-  };
+    const data = await response.json();
+    console.log('Vacante guardada exitosamente:', data.message);
+  } catch (error) {
+    console.error('Error al guardar la vacante visitada:', error);
+  }
+};
 
   useEffect(() => {
     fetchLastKeyword();
