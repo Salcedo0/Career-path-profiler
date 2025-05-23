@@ -5,124 +5,70 @@ import {
   FaMapMarkerAlt, // Para ubicación
   FaBriefcase,    // Para tipo de contrato
   FaDollarSign,   // Para salario
-  FaCalendarAlt,  // Para "Posted days ago"
-  FaUsers,        // Para "applicants"
-  FaShareAlt,     // Para el ícono de compartir
-  FaPaperPlane    // Para el ícono del botón "Apply Now" (simula una flecha de enviar)
+  FaHeart,        // Para el ícono de guardado
+  FaPaperPlane    // Para el botón "Apply Now"
 } from 'react-icons/fa';
 
-
 const DescPrev = ({
-
-  experience_education, 
-  key_words 
   title,
   empresa,
   city,
-  contract, // Nuevo: tipo de contrato
-  salary,   // Nuevo: rango salarial
-  isNew,    // Nuevo: para la etiqueta "New"
-  isSaved,  // Nuevo: para el ícono de corazón
-  tags,     // Nuevo: para las etiquetas de habilidades
   description,
-  requirements,
-  responsibilities, // Cambiado de 'responsibilities' a 'jobDescription' en el ejemplo de imagen para la descripción principal
-  benefits, // Nuevo: para la sección de beneficios
+  experience_education,
+  salary,
+  key_words,
 }) => {
   return (
     <div className="desc-prev-container">
-      {/* Sección del encabezado de la tarjeta */}
+      {/* Encabezado */}
       <div className="desc-prev-header">
-        <div className="desc-prev-header-top">
-          <div className="desc-prev-icon-wrapper">
-            <img src={placeholderIcon} alt="Company Icon" className="desc-prev-icon" />
-          </div>
-          <h2 className="desc-prev-title">{title || 'Título del Trabajo'}</h2>
-          {isNew && <span className="desc-prev-new-label">New</span>}
-          <div className="desc-prev-heart-icon">
-            <span className={isSaved ? 'saved' : ''}>&#x2764;</span> {/* Corazón relleno */}
-          </div>
+        <div className="desc-prev-icon-wrapper">
+          <img src={placeholderIcon} alt="Company Icon" className="desc-prev-icon" />
         </div>
-
+        <h2 className="desc-prev-title">{title || 'Título del Trabajo'}</h2>
         <p className="desc-prev-company">{empresa || 'Nombre de la Empresa'}</p>
+      </div>
 
-        {/* Detalles de ubicación, contrato, salario */}
-        <div className="desc-prev-details">
-          <div className='desc-prev-details-icons'>
-            <span>
-              <FaMapMarkerAlt />
-              {city || 'Ubicación'}
-            </span>
-            <span>
-              <FaBriefcase />
-              {contract || 'Tiempo Completo'}
-            </span>
-            <span>
-              <FaDollarSign />
-              {salary || '$Rango - $Rango'}
-            </span>
-          </div>
-        </div>  
+      {/* Detalles */}
+      <div className="desc-prev-details">
+        <div className="desc-prev-detail-item">
+          <FaMapMarkerAlt className="desc-prev-icon" />
+          <span>{city || 'Ubicación no disponible'}</span>
+        </div>
+        <div className="desc-prev-detail-item">
+          <FaBriefcase className="desc-prev-icon" />
+          <span>{experience_education || 'No especificado'}</span>
+        </div>
+        <div className="desc-prev-detail-item">
+          <FaDollarSign className="desc-prev-icon" />
+          <span>{salary || 'Salario no especificado'}</span>
+        </div>
+      </div>
 
-        {/* Tags de habilidades */}
-        {tags && tags.length > 0 && (
-          <div className="desc-prev-tag-container">
-            {tags.map((tag, index) => (
-              <span key={index} className="desc-prev-tag">{tag}</span>
+      {/* Descripción */}
+      <div className="desc-prev-description">
+        <h3>Descripción del Trabajo</h3>
+        <p>{description || 'No hay descripción disponible.'}</p>
+      </div>
+
+      {/* Palabras clave */}
+      {key_words && (
+        <div className="desc-prev-keywords">
+          <h3>Palabras Clave</h3>
+          <ul>
+            {key_words.split(',').map((keyword, index) => (
+              <li key={index}>{keyword.trim()}</li>
             ))}
-          </div>
-        )}
-      </div>
-
-      {/* Cuerpo principal de la descripción */}
-      <div className="desc-prev-content-sections">
-        {/* Sección de Descripción del Trabajo */}
-        <h3 className="section-title">Job Description</h3>
-        <p className="section-paragraph">{description || 'No hay descripción disponible.'}</p>
-
-        {/* Sección de Responsabilidades (si se usa así, la imagen no la tiene explícitamente separada de la descripción) */}
-        {responsibilities && responsibilities.length > 0 && (
-          <>
-            <h3 className="section-title">Responsibilities</h3>
-            <ul className="section-list">
-              {experience_education || '1 año'}
-              {key_words || '...'}
-            </ul>
-          </>
-        )}
-
-        {/* Sección de Requisitos */}
-        {requirements && requirements.length > 0 && (
-          <>
-            <h3 className="section-title">Requirements</h3>
-            <ul className="section-list">
-              {requirements.map((item, index) => (
-                <li key={index}>{item}</li>
-              ))}
-            </ul>
-          </>
-        )}
-
-        {/* Sección de Beneficios */}
-        {benefits && benefits.length > 0 && (
-          <>
-            <h3 className="section-title">Benefits</h3>
-            <ul className="section-list">
-              {benefits.map((item, index) => (
-                <li key={index}>{item}</li>
-              ))}
-            </ul>
-          </>
-        )}
-      </div>
+          </ul>
+        </div>
+      )}
 
       {/* Botón "Apply Now" */}
       <div className="desc-prev-apply-section">
         <button className="apply-now-button">
-          {/* Si usas react-icons: <MdSend /> */}
+          <FaPaperPlane className="apply-now-icon" />
           Apply Now
         </button>
-
       </div>
     </div>
   );

@@ -61,7 +61,6 @@ app.post('/search', async (req, res) => {
 
 });
 
-<<<<<<< HEAD
 app.post('/api/visited_vacant', async (req, res) => {
   const { userId, vacant, key_words } = req.body;
 
@@ -129,7 +128,6 @@ app.get('/api/recommendations', (req, res) => {
   });
 });
 
-=======
 
 app.post('/track-time', async (req, res) => {
   const { userId, jobId, timeSpent } = req.body;
@@ -156,7 +154,6 @@ app.post('/track-time', async (req, res) => {
   }
 });
 
->>>>>>> edd471b06b6bff621bafb977e03c99948abdc3e2
 app.listen(port, () => {
   console.log('Example app listening on port ' + port)
 })
