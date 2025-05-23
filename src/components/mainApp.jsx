@@ -111,8 +111,8 @@ function MainApp() {
         },
         body: JSON.stringify({
           userId,
-          vacant: job.title, // Guardar el título de la vacante
-          key_words: job.key_words.split(','), // Guardar las palabras clave
+            // Guardar el título de la vacante
+            key_words: job.key_words.replace('Palabras clave: ', '').split(',').map(keyword => keyword.trim()), // Filtrar y limpiar las palabras clave
         }),
       });
 
