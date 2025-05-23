@@ -6,13 +6,13 @@ dotenv.config(); // Load environment variables from .env file
 
 export const createFieldEmbedding = async() => {
 
-    const client = new MongoClient(process.env.MONGOUR);
+    const client = new MongoClient(process.env.MONGOURI);
 
     try {
 
         client.connect();
 
-        const collection = client.db("magneto").collection("jobs");
+        const collection = client.db("magneto").collection("jobs_excel");
 
         const documents = await collection.find().toArray();
 
@@ -20,7 +20,7 @@ export const createFieldEmbedding = async() => {
 
         await Promise.all(documents.map(async doc => {
 
-            const embedding = await getEmbedding(doc.nombre_vacante);
+            const embedding = await getEmbedding(doc.title);
 
             // Add the embedding to an array of update operations
             updateDocuments.push(
