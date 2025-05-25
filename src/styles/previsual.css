@@ -133,7 +133,8 @@
 
 .previsual-view-details {
     position: absolute;
-    bottom: 20px;
+    display: flex;;
+    bottom: 40px;
     right: 20px;
     font-size: 14px;
     color: #00796b;

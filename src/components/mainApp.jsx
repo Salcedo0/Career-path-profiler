@@ -3,6 +3,8 @@ import Previsual from './previsual';
 import Pagination from './pagination';
 import DescPrev from './desc_prev';
 import Nav_bar from './nav_bar';
+import './mainApp.css';
+import Spline from '@splinetool/react-spline';
 
 
 function MainApp() {
@@ -166,7 +168,12 @@ const saveVisitedVacant = async (job) => {
             key_words={selectedJob.key_words}
           />
         ) : (
-          <p>Selecciona un trabajo para ver los detalles.</p>
+          <div className='desc-block'>
+            <div className="desc-placeholder">
+              <h2>Selecciona una vacante para ver más detalles!</h2>
+              <Spline className='desc-3d' scene="https://prod.spline.design/m52xFajzaGvzauhI/scene.splinecode" />
+            </div>
+          </div>
         )}
       </div>
     </div>

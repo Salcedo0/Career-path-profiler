@@ -1,0 +1,40 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&family=Poetsen+One&display=swap');
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+}
+
+:root{
+    --color-de-letra: #029b38;
+}
+
+.desc-placeholder{
+    height: 90vh;
+    overflow: hidden;
+    
+
+}
+
+.desc-placeholder h2{
+    /* color: var(--color-de-letra); */
+    color: #000;
+    display: flex;
+    font-family: "Poetsen One", sans-serif;
+    font-size: 70px;
+    font-weight: 200;
+    z-index: -1;
+    margin: 20px;   
+    justify-items: center;
+    align-items: center;
+    text-align: center;
+    max-width: fit-content;
+}
+
+.desc-3d{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: -150px;
+}
