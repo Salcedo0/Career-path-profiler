@@ -18,7 +18,7 @@
 }
 
 .desc-placeholder h2{
-    /* color: var(--color-de-letra); */
+    /* color: var(--color-de-letra); */   /*recordar cambiar el color de la letra*/
     color: #000;
     display: flex;
     font-family: "Poetsen One", sans-serif;
