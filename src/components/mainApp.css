@@ -21,7 +21,7 @@
     /* color: var(--color-de-letra); */   /*recordar cambiar el color de la letra*/
     color: #000;
     display: flex;
-    font-family: "Poetsen One", sans-serif;
+    font-family: "arial", sans-serif;
     font-size: 50px;
     font-weight: 200;
     z-index: -1;
